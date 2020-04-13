@@ -9,18 +9,7 @@ function App() {
   const [homeScore, setHomeScore] = useState(0)
   const [awayScore, setAwayScore] = useState(0)
 
-  const score = event => {
-    const button = event.target.className
-    if(button === "homeButtons__touchdown"){
-      setHomeScore(homeScore+7)
-    }else if(button === "homeButtons__fieldGoal"){
-      setHomeScore(homeScore+3)
-    }else if(button === "awayButtons__touchdown"){
-      setAwayScore(awayScore+7)
-    }else {
-      setAwayScore(awayScore+3)
-    }
-  }
+  const [quarter, setQuarter] = useState(0)
 
   return (
     <div className="container">
@@ -38,18 +27,20 @@ function App() {
             <div className="away__score">{awayScore}</div>
           </div>
         </div>
-        <BottomRow />
+        <BottomRow quarter={quarter} />
       </section>
       <section className="buttons">
         <div className="homeButtons">
 
           {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown" onClick={score}>Home Touchdown</button>
-          <button className="homeButtons__fieldGoal" onClick={score}>Home Field Goal</button>
+          <button className="homeButtons__touchdown" onClick={event => setHomeScore(homeScore+7)}>Home Touchdown</button>
+          <button className="homeButtons__fieldGoal" onClick={event => setHomeScore(homeScore+3)}>Home Field Goal</button>
+          <button className="quarter_up" onClick={event => quarter < 4? setQuarter(quarter+1): null}>Quarter Up</button>
         </div>
         <div className="awayButtons">
-          <button className="awayButtons__touchdown" onClick={score}>Away Touchdown</button>
-          <button className="awayButtons__fieldGoal" onClick={score}>Away Field Goal</button>
+          <button className="awayButtons__touchdown" onClick={event => setAwayScore(awayScore+7)}>Away Touchdown</button>
+          <button className="awayButtons__fieldGoal" onClick={event => setAwayScore(awayScore+3)}>Away Field Goal</button>
+          {/* <button className="quarter_down" onClick={event => quarter > 0? setQuarter(quarter-1): null}>Quarter Down</button> */}
         </div>
       </section>
     </div>
